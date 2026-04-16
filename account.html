@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account & Payments | DecodeFXGroup</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Paystack script — replace key in script.js -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════ -->
+  <nav class="navbar scrolled">
+    <div class="nav-inner">
+     <a href="index.html" class="nav-logo">
+  <img src="images/logo2.png" alt="DecodeFXGroup Logo" class="nav-logo-img" />
+  Decode<span>FX</span>Group
+</a>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="dashboard.html" class="btn btn-outline" style="padding:8px 20px">← Dashboard</a>
+        <button class="btn btn-primary" style="padding:8px 20px" onclick="Auth.logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ MAIN ════════════════════════════════════════════════ -->
+  <div style="padding-top:80px;min-height:100vh">
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+      <span class="badge">Account Centre</span>
+      <h1>Subscription & <span class="gold">Payments</span></h1>
+      <p>Manage your membership, upgrade your plan, or make a payment below.</p>
+    </div>
+
+    <div class="container section">
+
+      <!-- Subscription Status -->
+      <div id="subStatusDisplay"></div>
+
+      <!-- ── PAYMENT SECTION ─────────────────────────────── -->
+      <div style="margin-bottom:48px">
+        <h2 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:8px">
+          Make a <span class="gold">Payment</span>
+        </h2>
+        <p style="color:var(--grey-light);margin-bottom:32px">
+          Choose your preferred payment method below. After payment, send your receipt to our WhatsApp for activation.
+        </p>
+
+        <!-- Plan selector -->
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px">
+          <button class="btn btn-primary plan-select-btn" data-plan="enrollment" data-amount="300">Enroll — $300</button>
+          <button class="btn btn-outline plan-select-btn" data-plan="standard" data-amount="50">Standard — $50/mo</button>
+          <button class="btn btn-outline plan-select-btn" data-plan="vip" data-amount="150">VIP — $150/mo</button>
+        </div>
+
+        <div id="selectedPlanInfo" style="background:var(--charcoal);border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:24px;margin-bottom:32px;display:none">
+          <div style="font-size:0.78rem;color:var(--grey);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Selected Plan</div>
+          <div id="planName" style="font-weight:700;font-size:1.2rem;margin-bottom:4px"></div>
+          <div id="planAmount" style="color:var(--gold);font-family:var(--font-impact);font-size:2rem"></div>
+        </div>
+
+        <!-- Payment Methods -->
+        <h3 style="font-size:1rem;font-weight:600;margin-bottom:20px;color:var(--grey-light)">Choose Payment Method:</h3>
+        <div class="payment-methods">
+
+          
+
+          <!-- Binance / USDT -->
+          <div class="payment-method-card" id="binanceCard" onclick="showCryptoDetails()">
+            <div class="pm-icon">₿</div>
+            <h4>Binance / USDT</h4>
+            <p>Pay in crypto (USDT/BNB) via Binance transfer.</p>
+            <br>
+            <span class="btn btn-outline" style="pointer-events:none;font-size:0.78rem;padding:8px 20px">Pay with Crypto</span>
+          </div>
+          <div class="payment-methods" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+
+  </div>
+            
+  
+
+  <!-- ✅ NEW — Access Bank -->
+  <div class="payment-method-card" onclick="showBankDetails()">
+    <div class="pm-icon">🏦</div>
+    <h4>Access Bank Transfer</h4>
+    <p>Direct bank transfer to our Access Bank account.</p>
+    <br>
+    <span class="btn btn-outline" style="pointer-events:none;font-size:0.78rem;padding:8px 20px">
+      Bank Transfer
+    </span>
+  </div>
+
+</div>
+
+<!-- Bank details panel for account.html -->
+<div id="bankDetailsAccount" style="display:none;background:var(--charcoal);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:36px;margin-top:20px">
+
+  <h3 style="font-family:var(--font-display);font-size:1.5rem;margin-bottom:24px">
+    Bank Transfer <span class="gold">Details</span>
+  </h3>
+
+  <!-- Access Bank logo strip -->
+  <div style="display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#e63946,#c1121f);border-radius:8px;padding:16px 24px;margin-bottom:24px">
+    <span style="font-size:2rem">🏦</span>
+    <div>
+      <div style="font-weight:800;font-size:1.1rem;color:white;letter-spacing:0.05em">ACCESS BANK PLC</div>
+      <div style="font-size:0.78rem;color:rgba(255,255,255,0.7)">Nigeria's Most Consistent Bank</div>
+    </div>
+  </div>
+
+  <!-- Details grid -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+    <div style="background:var(--navy);border-radius:6px;padding:20px">
+      <div style="font-size:0.7rem;color:var(--grey);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px">Account Number</div>
+      <div style="font-family:monospace;font-size:1.4rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;margin-bottom:10px">1224074947</div>
+      <button class="btn btn-outline" style="padding:7px 16px;font-size:0.75rem" data-copy="1224074947">
+        📋 Copy
+      </button>
+    </div>
+    <div style="background:var(--navy);border-radius:6px;padding:20px">
+      <div style="font-size:0.7rem;color:var(--grey);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px">Account Name</div>
+      <div style="font-size:0.95rem;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.4">AYOBAMI PELUMI ODEJIDE</div>
+      <button class="btn btn-outline" style="padding:7px 16px;font-size:0.75rem" data-copy="Ayobami Pelumi Odejide">
+        📋 Copy
+      </button>
+    </div>
+  </div>
+
+  <!-- NGN amount notice -->
+  <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:18px 20px;margin-bottom:20px">
+    <div style="font-size:0.72rem;color:var(--grey);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px">Reference Amounts (₦1 = $1,600)</div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:var(--font-impact);font-size:1.6rem;color:var(--gold)">₦480,000</div>
+        <div style="font-size:0.75rem;color:var(--grey)">Enrollment — $300</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-impact);font-size:1.6rem;color:var(--gold)">₦80,000</div>
+        <div style="font-size:0.75rem;color:var(--grey)">Standard — $50/mo</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-impact);font-size:1.6rem;color:var(--gold)">₦240,000</div>
+        <div style="font-size:0.75rem;color:var(--grey)">VIP — $150/mo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instructions -->
+  <div style="font-size:0.82rem;color:var(--grey-light);background:rgba(76,175,138,0.05);border:1px solid rgba(76,175,138,0.15);border-radius:6px;padding:18px;margin-bottom:20px">
+    <strong style="color:#4caf8a">✅ After transferring:</strong><br><br>
+    Send your <strong style="color:var(--white)">name + transfer receipt</strong> to our WhatsApp.
+    Your account will be activated within <strong style="color:var(--gold)">30 minutes</strong>.
+  </div>
+
+  <a href="https://wa.me/2348173133453?text=Hello%20DecodeFXGroup%2C%20I%20have%20transferred%20to%20Access%20Bank%20account%201224074947%20(Ayobami%20Pelumi%20Odejide).%20Please%20activate%20my%20account."
+     target="_blank"
+     class="btn btn-primary"
+     style="width:100%;justify-content:center">
+    <img src="Images/whatsapp2.png" alt="whatsapp logo" height="40px" width="40px"> Receipt on WhatsApp →
+  </a>
+
+</div>
+
+        </div>
+      </div>
+
+      <!-- Crypto Details (hidden by default) -->
+      <div id="cryptoDetails" style="display:none;background:var(--charcoal);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:36px;margin-bottom:48px">
+        <h3 style="font-family:var(--font-display);font-size:1.5rem;margin-bottom:24px">
+          Crypto Payment <span class="gold">Instructions</span>
+        </h3>
+
+        <div style="background:var(--navy);border-radius:6px;padding:24px;margin-bottom:20px">
+          <div style="font-size:0.78rem;color:var(--grey);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">USDT Wallet Address (ERC20 (Ethereum))</div>
+          <div style="font-family:monospace;font-size:0.9rem;word-break:break-all;color:var(--gold);margin-bottom:12px">
+            <!-- Replace with real wallet address -->
+           0x85d1ce7cdb52c0be209def7ef041c3f7f67e68c5
+          </div>
+          <button class="btn btn-outline" style="padding:8px 20px;font-size:0.78rem"
+            data-copy="0xBd41795def27c74870364e2e1Ed9aC7A4166A68A">
+            📋 Copy Address
+          </button>
+        </div>
+
+        <div style="background:var(--navy);border-radius:6px;padding:24px;margin-bottom:24px">
+          <div style="font-size:0.78rem;color:var(--grey);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">Binance Pay ID</div>
+          <div style="font-family:monospace;font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:12px">
+
+        <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.15);border-radius:6px;padding:20px;font-size:0.88rem;color:var(--grey-light)">
+          <strong style="color:var(--gold)">⚠️ After payment:</strong><br>
+          Send your transaction ID/screenshot to our WhatsApp:
+          <strong style="color:var(--white)"> +234 817 313 3453</strong><br>
+          Your account will be activated within <strong style="color:var(--gold)">30 minutes</strong>.
+        </div>
+      </div>
+
+      <!-- WhatsApp Confirmation -->
+      <div style="background:linear-gradient(135deg,var(--charcoal),var(--navy-light));border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:32px;text-align:center;margin-bottom:48px">
+        <div style="font-size:2rem;margin-bottom:14px"></div>
+        <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:8px">Confirm Payment via WhatsApp</h3>
+        <p style="color:var(--grey-light);font-size:0.9rem;margin-bottom:24px;max-width:480px;margin-left:auto;margin-right:auto">
+          After any payment, send your proof of payment to us on WhatsApp. We'll activate your account manually within 30 minutes.
+        </p>
+        <a href="https://wa.me/2348173133453?text=Hello%20DecodeFXGroup%2C%20I%20just%20made%20a%20payment%20and%20want%20to%20confirm%20my%20enrolment."
+           target="_blank" class="btn btn-primary" style="font-size:0.9rem">
+          <img src="Images/whatsapp2.png" alt="whatsapp logo" height="40px" width="40px"> Payment Proof — WhatsApp
+        </a>
+      </div>
+
+      <!-- Subscription Plan Details -->
+      <h2 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:24px">
+        Plan <span class="gold">Details</span>
+      </h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+
+        <div style="background:var(--charcoal);border:1px solid rgba(201,168,76,0.1);border-radius:8px;padding:28px">
+          <div style="color:var(--gold);font-size:0.78rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">Academy Enrollment</div>
+          <div style="font-family:var(--font-impact);font-size:2.8rem;color:var(--white);margin-bottom:8px">$300</div>
+          <div style="font-size:0.82rem;color:var(--grey-light);margin-bottom:16px">One-time fee</div>
+          <ul style="font-size:0.85rem;color:var(--grey-light)">
+            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">✦ Full LMS access (lifetime)</li>
+            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">✦ 30 days signals included</li>
+            <li style="padding:6px 0">✦ Private Telegram access</li>
+          </ul>
+        </div>
+
+        <div style="background:var(--charcoal);border:1px solid rgba(201,168,76,0.1);border-radius:8px;padding:28px">
+          <div style="color:var(--gold);font-size:0.78rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">Standard Signals</div>
+          <div style="font-family:var(--font-impact);font-size:2.8rem;color:var(--white);margin-bottom:8px">$50</div>
+          <div style="font-size:0.82rem;color:var(--grey-light);margin-bottom:16px">Per month (after free 30 days)</div>
+          <ul style="font-size:0.85rem;color:var(--grey-light)">
+            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">✦ Daily forex signals</li>
+            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">✦ Entry, SL & TP included</li>
+            <li style="padding:6px 0">✦ Weekly market analysis</li>
+          </ul>
+        </div>
+
+        <div style="background:linear-gradient(135deg,var(--charcoal-2),var(--navy-light));border:1px solid var(--gold);border-radius:8px;padding:28px;position:relative">
+          <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,var(--gold),var(--gold-dark));color:var(--navy);font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:5px 16px;border-radius:2px;white-space:nowrap">👑 VIP Elite</div>
+          <div style="color:var(--gold);font-size:0.78rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">VIP Signals</div>
+          <div style="font-family:var(--font-impact);font-size:2.8rem;color:var(--white);margin-bottom:8px">$150</div>
+          <div style="font-size:0.82rem;color:var(--grey-light);margin-bottom:16px">Per month — everything included</div>
+          <ul style="font-size:0.85rem;color:var(--grey-light)">
+            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">✦ All standard features</li>
+            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">✦ Crypto & gold signals</li>
+            <li style="padding:6px 0">✦ 1-on-1 monthly session</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════════ -->
+  <footer style="background:var(--navy);border-top:1px solid rgba(201,168,76,0.1);padding:32px 24px;text-align:center">
+    <p style="font-size:0.82rem;color:var(--grey)">
+      © 2026 DecodeFXGroup. Trading involves significant risk of loss.
+      &nbsp;|&nbsp; <a href="contact.html" style="color:var(--gold)">Support</a>
+    </p>
+  </footer>
+
+  <!-- ══ WHATSAPP FLOAT ══════════════════════════════════════ -->
+  <a href="https://wa.me/2348173133453" class="whatsapp-float" target="_blank" aria-label="WhatsApp"><img src="Images/whatsapp2.png"
+  alt="whatsapp logo"></a>
+
+  <script src="js/script.js"></script>
+  <script>
+    // ── Plan selection buttons ───────────────────────────────
+    let selectedPlan = null;
+
+    document.querySelectorAll('.plan-select-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update button states
+        document.querySelectorAll('.plan-select-btn').forEach(b => {
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-outline');
+        });
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-outline');
+
+        // Show plan info
+        selectedPlan = { plan: btn.dataset.plan, amount: btn.dataset.amount };
+        const infoBox = document.getElementById('selectedPlanInfo');
+        infoBox.style.display = 'block';
+        document.getElementById('planName').textContent =
+          btn.dataset.plan === 'enrollment' ? 'Academy Enrollment (One-Time)' :
+          btn.dataset.plan === 'standard'   ? 'Standard Signals (Monthly)' :
+          'VIP Elite Signals (Monthly)';
+        document.getElementById('planAmount').textContent = '$' + btn.dataset.amount;
+      });
+    });
+
+    // ── Paystack handler ─────────────────────────────────────
+    function handlePaystack() {
+      if (!selectedPlan) {
+        showToast('Please select a plan first.', 'error');
+        return;
+      }
+      const user = Auth.getUser();
+      const email = user ? user.email : prompt('Enter your email for payment:');
+      if (!email) return;
+
+      // Convert USD → NGN (use real exchange rate in production)
+      // Example: $1 = ₦1,600 → $300 = ₦480,000 = 48,000,000 kobo
+      const usdToNgn   = 1600;
+      const amountNaira = parseInt(selectedPlan.amount) * usdToNgn;
+      const amountKobo  = amountNaira * 100;
+
+      // Paystack
+      initPaystack(amountKobo, email, function(response) {
+        showToast('Payment successful! Activating account...', 'success');
+        console.log('Paystack ref:', response.reference);
+        // In production: verify on backend, then activate subscription
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 2000);
+      });
+    }
+    window.handlePaystack = handlePaystack;
+
+    // ── Crypto details toggle ────────────────────────────────
+    function showCryptoDetails() {
+      if (!selectedPlan) {
+        showToast('Please select a plan first.', 'error');
+        return;
+      }
+      const el = document.getElementById('cryptoDetails');
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
+      if (el.style.display === 'block') {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    window.showCryptoDetails = showCryptoDetails;
+
+    // ── Auto-open checkout if redirected from register ───────
+    if (window.location.search.includes('checkout=1')) {
+      setTimeout(() => {
+        document.querySelector('[data-plan="enrollment"]')?.click();
+        showToast('Complete your payment to activate your account.', 'info');
+      }, 500);
+    }
+  </script>
+</body>
+</html>
